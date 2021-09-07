@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # svg2png(bytestring=s, parent_width=4000, parent_height=4000, write_to="output.png")
     # ImgUtil.svg2png('assets/wave 1.svg')
 
-    im = Image.open('wave 1.png')
+    # im = Image.open('wave 1.png')
 
     # data = np.array(im)   # "data" is a height x width x 4 numpy array
     # red, green, blue, alpha = data.T # Temporarily unpack the bands for readability
@@ -26,14 +26,19 @@ if __name__ == '__main__':
     # im2 = Image.fromarray(data)
     # im2.show()
 
-    THEME = (255, 161, 70)
-    c = Iu.lightness(THEME, 0.25)
-    ic(c)
+    # THEME = (255, 161, 70)
+    # c = Iu.lightness(THEME, 0.25)
+    # ic(c)
+    #
+    # im = Iu.refill_color(im, (0, 0, 0), c)
+    # # im.putalpha(127)
+    # # im.show()
+    #
+    # im = Iu.sweep_alpha(im, 0.75)
 
-    im = Iu.refill_color(im, (0, 0, 0), c)
-    # im.putalpha(127)
-    # im.show()
+    Iu.svg2img('icons/Figma.svg', sz=600 * 0.75 * 2)
+    ic(Image.open('icons/Figma, 900.png').size)
 
-    im = Iu.sweep_alpha(im, 0.75)
+    # Iu.svg2img('assets/wave 1.svg', sz=600 * 0.75 * 2)
 
 

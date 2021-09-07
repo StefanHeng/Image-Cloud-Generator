@@ -2,36 +2,51 @@ import numpy as np
 
 from PIL import Image, ImageDraw
 from pathlib import Path
-
+from cairosvg import svg2png
 from icecream import ic
 
 
 class ImgUtil:
+    def __init__(self, verbose=False):
+        self.verbose = verbose
+
     @staticmethod
     def circle_bbox(x, y, r):
         return list(map(int, [x-r, y-r, x+r, y+r]))
 
-    @staticmethod
-    def draw_circle(img, x, y, r, outline=None, fill=None, width=1):
+    def draw_circle(self, img, x, y, r, outline=None, fill=None, width=1):
         draw = ImageDraw.Draw(img)
         bbox = ImgUtil.circle_bbox(x, y, r)
         draw.ellipse(bbox, outline=outline, fill=fill, width=width)
-        ic(f'Ellipse drawn with bounding box {bbox}')
+        if self.verbose:
+            ic(f'Ellipse drawn with bounding box {bbox}')
 
-    @staticmethod
-    def svg2img(f, sz=4000):
+    def svg2img(self, f, sz=4000):
         """
         Converts an SVG file to a pillow image
         """
-        fnm = Path(f).stem
-        from cairosvg import svg2png
-        s = open(f, 'rb').read()
-        svg2png(bytestring=s, parent_width=sz, parent_height=sz, write_to=f'{fnm}.png')
-        ic(f'SVG converted to PNG file: {fnm}.png')
-        return Image.open(f'{fnm}.png')
+        fnm = Path(f).with_suffix('')  # Remove file ext.
+        sz = int(sz)
+        fnm_png = f'{fnm}, {sz}.png'
 
-    @staticmethod
+        if not Path(fnm_png).exists():
+            s = open(f, 'rb').read()
+            svg2png(bytestring=s, parent_width=sz, parent_height=sz, write_to=fnm_png)
+            if self.verbose:
+                ic(f'SVG converted to PNG file: {fnm_png}')
+        else:
+            if self.verbose:
+                ic(f'Using converted PNG file: {fnm_png}')
+
+        im = Image.open(fnm_png)
+        w, h = im.size
+        if w > sz or h > sz:
+            im.thumbnail((sz, sz), Image.ANTIALIAS)
+            im.save(fnm_png)
+        return im
+
     def refill_color(
+            self,
             img,
             c_ori: tuple[int, int, int],
             c_new: tuple[int, int, int]
@@ -43,8 +58,8 @@ class ImgUtil:
         arr[..., :-1][area.T] = c_new
 
         img_new = Image.fromarray(arr)
-        ic(f'Image filled with {c_ori} converted to {c_new}')
-        # img_new.show()
+        if self.verbose:
+            ic(f'Image filled with {c_ori} converted to {c_new}')
         return img_new
 
     @staticmethod
@@ -63,12 +78,11 @@ class ImgUtil:
             ))
             return tuple(map(int, c_new))
 
-    @staticmethod
-    def sweep_alpha(img, f):
+    def sweep_alpha(self, img, f):
         arr = np.array(img)
         r, g, b, a = arr.T
         arr[..., -1] = a.T * f
         img_new = Image.fromarray(arr)
-        # img_new.show()
-        ic(f'Image alpha channel multiplied by {f}')
+        if self.verbose:
+            ic(f'Image alpha channel multiplied by {f}')
         return img_new
