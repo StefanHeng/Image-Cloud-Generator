@@ -1,6 +1,8 @@
 # Image-Cloud-Generator
-Like word clouds, this is a utility that generates an image cloud. 
 
+<img src="https://github.com/StefanHeng/Image-Cloud-Generator/blob/master/output/img-cloud%201631066409.1380491.pngg" style="zoom:15%;" />
+
+Like word clouds, this is a utility that generates an image cloud.
 
 
 ## To use 
