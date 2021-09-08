@@ -1,0 +1,128 @@
+{
+    "imgs": {
+        "markdown": {
+            "name": "markdown",
+            "type": "Communication",
+            "fluency": 0.8
+        },
+        "Python": {
+            "name": "Python",
+            "type": "Language",
+            "fluency": 0.7
+        },
+        "AdobePhotoshop": {
+            "name": "Adobe Photoshop",
+            "type": "Design",
+            "fluency": 0.7
+        },
+        "HTML": {
+            "name": "HTML",
+            "type": "Language",
+            "fluency": 0.5
+        },
+        "Marko": {
+            "name": "Marko, edited",
+            "type": "Language",
+            "fluency": 0.5
+        },
+        "JavaScript": {
+            "name": "JavaScript",
+            "type": "Language",
+            "fluency": 0.5
+        },
+        "LaTeX": {
+            "name": "LaTeX, modified",
+            "type": "Communication",
+            "fluency": 0.5
+        },
+        "VisualStudioCode": {
+            "name": "Visual Studio Code",
+            "type": "IDE",
+            "fluency": 0.5
+        },
+        "Plotly": {
+            "name": "Plotly, modified",
+            "type": "Framework",
+            "fluency": 0.4
+        },
+        "AdobeIllustrator": {
+            "name": "Adobe Illustrator",
+            "type": "Design",
+            "fluency": 0.4
+        },
+        "PyCharm": {
+            "name": "PyCharm",
+            "type": "IDE",
+            "fluency": 0.4
+        },
+        "PyTorch": {
+            "name": "PyTorch, modified",
+            "type": "Framework",
+            "fluency": 0.3
+        },
+        "Cpp": {
+            "name": "Cpp",
+            "type": "Language",
+            "fluency": 0.3
+        },
+        "nodejs": {
+            "name": "nodejs",
+            "type": "Framework",
+            "fluency": 0.3
+        },
+        "JetBrains": {
+            "name": "JetBrains",
+            "type": "IDE",
+            "fluency": 0.3
+        },
+        "CLion": {
+            "name": "CLion",
+            "tyoe": "IDE",
+            "fluency": 0.3
+        },
+        "Android": {
+            "name": "Android, modified",
+            "type": "Language",
+            "fluency": 0.2
+        },
+        "LESS": {
+            "name": "LESS, modified",
+            "type": "Language",
+            "fluency": 0.2
+        },
+        "JAVA": {
+            "name": "JAVA",
+            "type": "Language",
+            "fluency": 0.2
+        },
+        "OCaml": {
+            "name": "OCaml, modified",
+            "type": "Language",
+            "fluency": 0.2
+        },
+        "AdobePremierePro": {
+            "name": "Adobe Premiere Pro",
+            "type": "Design",
+            "fluency": 0.2
+        },
+        "Figma": {
+            "name": "Figma",
+            "type": "Design",
+            "fluency": 0.2
+        },
+        "XML": {
+            "name": "XML, modified",
+            "type": "Design",
+            "fluency": 0.2
+        },
+        "ruby": {
+            "name": "ruby",
+            "type": "Language",
+            "fluency": 0.1
+        },
+        "Postman": {
+            "name": "Postman",
+            "fluency": 0.1
+        }
+    }
+}

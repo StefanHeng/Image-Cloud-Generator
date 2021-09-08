@@ -1,0 +1,151 @@
+"""
+Example image dictionary generated
+"""
+
+from icecream import ic
+
+
+d = dict(
+    imgs=dict(
+        markdown=dict(
+            name='markdown',
+            type='Communication',
+            fluency=0.8
+        ),
+        Python=dict(
+            name='Python',
+            type='Language',
+            fluency=0.7
+        ),
+        AdobePhotoshop=dict(
+            name='Adobe Photoshop',
+            type='Design',
+            fluency=0.7
+        ),
+        HTML=dict(
+            name='HTML',
+            type='Language',
+            fluency=0.5
+        ),
+        Marko=dict(
+            name='Marko, edited',
+            type='Language',
+            fluency=0.5
+        ),
+        JavaScript=dict(
+            name='JavaScript',
+            type='Language',
+            fluency=0.5
+        ),
+        LaTeX=dict(
+            name='LaTeX, modified',
+            type='Communication',
+            fluency=0.5
+        ),
+        VisualStudioCode=dict(
+            name='Visual Studio Code',
+            type='IDE',
+            fluency=0.5
+        ),
+        Plotly=dict(
+            name='Plotly, modified',
+            type='Framework',
+            fluency=0.4
+        ),
+        AdobeIllustrator=dict(
+            name='Adobe Illustrator',
+            type='Design',
+            fluency=0.4
+        ),
+        PyCharm=dict(
+            name='PyCharm',
+            type='IDE',
+            fluency=0.4
+        ),
+        PyTorch=dict(
+            name='PyTorch, modified',
+            type='Framework',
+            fluency=0.3
+        ),
+        Cpp=dict(
+            name='Cpp',
+            type='Language',
+            fluency=0.3
+        ),
+        nodejs=dict(
+            name='nodejs',
+            type='Framework',
+            fluency=0.3
+        ),
+        JetBrains=dict(
+            name='JetBrains',
+            type='IDE',
+            fluency=0.3
+        ),
+        CLion=dict(
+            name='CLion',
+            tyoe='IDE',
+            fluency=0.3
+        ),
+        Android=dict(
+            name='Android, modified',
+            type='Language',
+            fluency=0.2
+        ),
+        LESS=dict(
+            name='LESS, modified',
+            type='Language',
+            fluency=0.2
+        ),
+        JAVA=dict(
+            name='JAVA',
+            type='Language',
+            fluency=0.2
+        ),
+        OCaml=dict(
+            name='OCaml, modified',
+            type='Language',
+            fluency=0.2
+        ),
+        AdobePremierePro=dict(
+            name='Adobe Premiere Pro',
+            type='Design',
+            fluency=0.2
+        ),
+        Figma=dict(
+            name='Figma',
+            type='Design',
+            fluency=0.2
+        ),
+        XML=dict(
+            name='XML, modified',
+            type='Design',
+            fluency=0.2
+        ),
+        ruby=dict(
+            name='ruby',
+            type='Language',
+            fluency=0.1
+        ),
+        Postman=dict(
+            name='Postman',  # If `type` unspecified, an `Other` type
+            fluency=0.1
+        )
+    )
+)
+
+
+if __name__ == '__main__':
+    import json
+
+    fl_nm = 'example.json'
+    with open(fl_nm, 'w') as f:
+        json.dump(d, f, indent=4)
+
+    ic(d)
+    imgs = d['imgs']
+    v = imgs.values()
+
+    types = set(map(lambda x: x['type'] if 'type' in x else 'Other', v))
+    ic(types)
+    ic(f'Image dictionary with {len(v)} images of {len(types)} created')

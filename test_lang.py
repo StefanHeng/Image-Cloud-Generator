@@ -5,7 +5,7 @@ import numpy as np
 
 from icecream import ic
 
-from img_util import ImgUtil as Iu
+from img_util import ImgUtil
 
 if __name__ == '__main__':
     # s = open("assets/wave 1.svg", "rb").read()
@@ -36,9 +36,19 @@ if __name__ == '__main__':
     #
     # im = Iu.sweep_alpha(im, 0.75)
 
-    Iu.svg2img('icons/Figma.svg', sz=600 * 0.75 * 2)
-    ic(Image.open('icons/Figma, 900.png').size)
+    iu = ImgUtil()
+    #
+    # # iu.svg2img('icons/Figma.svg', sz=600 * 0.75 * 2)
+    # # ic(Image.open('icons/Figma, 900.png').size)
+    #
+    # # Iu.svg2img('assets/wave 1.svg', sz=600 * 0.75 * 2)
+    #
+    # a = '1'
+    # d = {}
+    # d[a] = 2
+    # ic(d[a])
+    #
+    # ic(np.std([1, 200]))
+    # ic(np.std([1]))
 
-    # Iu.svg2img('assets/wave 1.svg', sz=600 * 0.75 * 2)
-
-
+    iu.svg2img('icons/PyTorch, modified.svg', sz=600)
