@@ -77,7 +77,7 @@
         },
         "CLion": {
             "name": "CLion",
-            "tyoe": "IDE",
+            "type": "IDE",
             "fluency": 0.3
         },
         "Android": {
@@ -124,5 +124,37 @@
             "name": "Postman",
             "fluency": 0.1
         }
+    },
+    "theme": {
+        "Communication": [
+            255,
+            127,
+            26
+        ],
+        "Design": [
+            242,
+            101,
+            167
+        ],
+        "Framework": [
+            44,
+            204,
+            174
+        ],
+        "IDE": [
+            65,
+            107,
+            191
+        ],
+        "Language": [
+            0,
+            205,
+            255
+        ],
+        "Other": [
+            47,
+            56,
+            64
+        ]
     }
 }

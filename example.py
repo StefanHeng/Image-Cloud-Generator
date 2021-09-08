@@ -84,7 +84,7 @@ d = dict(
         ),
         CLion=dict(
             name='CLion',
-            tyoe='IDE',
+            type='IDE',
             fluency=0.3
         ),
         Android=dict(
@@ -128,9 +128,17 @@ d = dict(
             fluency=0.1
         ),
         Postman=dict(
-            name='Postman',  # If `type` unspecified, an `Other` type
+            name='Postman, modified',  # If `type` unspecified, will set to `Other` type
             fluency=0.1
         )
+    ),
+    theme=dict(
+        Communication=(255, 127, 26),
+        Design=(242, 101, 167),
+        Framework=(44, 204, 174),
+        IDE=(65, 107, 191),
+        Language=(0, 205, 255),
+        Other=(47, 56, 64)
     )
 )
 

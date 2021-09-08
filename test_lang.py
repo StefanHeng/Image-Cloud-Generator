@@ -52,3 +52,5 @@ if __name__ == '__main__':
     # ic(np.std([1]))
 
     iu.svg2img('icons/PyTorch, modified.svg', sz=600)
+
+    ic('#%02x%02x%02x' % (0, 128, 64))
