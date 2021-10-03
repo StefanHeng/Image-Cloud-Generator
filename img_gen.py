@@ -249,8 +249,11 @@ class ImgGen:
 if __name__ == '__main__':
     import json
 
+    n_runs = 5
+
     with open('example.json') as f:
         d = json.load(f)
 
         THEME = (255, 161, 70)
-        ig = ImgGen(d, overlay=True)
+        for i in range(n_runs):
+            ig = ImgGen(d, overlay=True)

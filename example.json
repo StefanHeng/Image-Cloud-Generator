@@ -10,6 +10,11 @@
             "type": "Language",
             "fluency": 0.7
         },
+        "NumPy": {
+            "name": "NumPy",
+            "type": "Framework",
+            "fluency": 0.7
+        },
         "AdobePhotoshop": {
             "name": "Adobe Photoshop",
             "type": "Design",
@@ -58,7 +63,7 @@
         "PyTorch": {
             "name": "PyTorch, modified",
             "type": "Framework",
-            "fluency": 0.3
+            "fluency": 0.4
         },
         "Cpp": {
             "name": "Cpp",
@@ -67,6 +72,11 @@
         },
         "nodejs": {
             "name": "nodejs",
+            "type": "Framework",
+            "fluency": 0.3
+        },
+        "pandas": {
+            "name": "pandas, modified",
             "type": "Framework",
             "fluency": 0.3
         },
@@ -88,6 +98,11 @@
         "LESS": {
             "name": "LESS, modified",
             "type": "Language",
+            "fluency": 0.2
+        },
+        "DataSpell": {
+            "name": "DataSpell, modified",
+            "type": "IDE",
             "fluency": 0.2
         },
         "JAVA": {
@@ -121,7 +136,7 @@
             "fluency": 0.1
         },
         "Postman": {
-            "name": "Postman",
+            "name": "Postman, modified",
             "fluency": 0.1
         }
     },

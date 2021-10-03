@@ -17,6 +17,11 @@ d = dict(
             type='Language',
             fluency=0.7
         ),
+        NumPy=dict(
+            name='NumPy',
+            type='Framework',
+            fluency=0.7
+        ),
         AdobePhotoshop=dict(
             name='Adobe Photoshop',
             type='Design',
@@ -65,7 +70,7 @@ d = dict(
         PyTorch=dict(
             name='PyTorch, modified',
             type='Framework',
-            fluency=0.3
+            fluency=0.4
         ),
         Cpp=dict(
             name='Cpp',
@@ -74,6 +79,11 @@ d = dict(
         ),
         nodejs=dict(
             name='nodejs',
+            type='Framework',
+            fluency=0.3
+        ),
+        pandas=dict(
+            name='pandas, modified',
             type='Framework',
             fluency=0.3
         ),
@@ -95,6 +105,11 @@ d = dict(
         LESS=dict(
             name='LESS, modified',
             type='Language',
+            fluency=0.2
+        ),
+        DataSpell=dict(
+            name='DataSpell, modified',
+            type='IDE',
             fluency=0.2
         ),
         JAVA=dict(
