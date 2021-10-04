@@ -72,6 +72,11 @@ d = dict(
             type='Framework',
             fluency=0.4
         ),
+        scikit_learn=dict(
+            name='scikit_learn, modified',
+            type='Framework',
+            fluency=0.3
+        ),
         Cpp=dict(
             name='Cpp',
             type='Language',
@@ -104,6 +109,11 @@ d = dict(
         ),
         LESS=dict(
             name='LESS, modified',
+            type='Language',
+            fluency=0.2
+        ),
+        MATLAB=dict(
+            name='MATLAB, modified',
             type='Language',
             fluency=0.2
         ),
