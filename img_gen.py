@@ -87,7 +87,6 @@ class ImgGen:
         self.is_d_theme = type(self.theme) is dict
 
         self.img = None
-        self.gen()
 
     def _draw_img_bg(self, ratio, typ):
         """
@@ -158,79 +157,109 @@ class ImgGen:
             ic('Image with ratio background generated')
         return final
 
-    def gen(self):
+    def __call__(self, r=1.0, patience=1e4):
+        """
+        :param r: Relative ratio of image to the canvas
+        :param patience: Restart image center generations after `patience` iterations
+        """
         imgs = self.img_d['imgs'].values()
 
-        sz = ceil(sqrt(len(imgs))) * self.sz_img * 3  # Make sure canvas large enough
+        sz = int(ceil(sqrt(len(imgs))) * self.sz_img * 3 * r)  # Make sure canvas large enough
         ic(sz)
         self.img = Image.new('RGBA', (sz, sz), (255, 255, 255, 255))
 
-        centers = dict()  # Image center coordinates, by type
+        class Patience:
+            def __init__(self):
+                self.count = 0
+                self.p = patience
 
-        def _get_center(t, s):
-            """
-            :param t: Type of image
-            :param s: Radius pixel size of image
-            """
-            def collide(x_i, y_i):
-                margin = sz * self.R_MG
-                if x_i < margin or x_i > sz - margin or y_i < margin or y_i > sz - margin:
-                    return True
+            def inc(self):
+                self.count += 1
 
-                for img in self.img_d['imgs'].values():
-                    if 'center' in img:
-                        xc_i, yc_i = img['center']
-                        r_i = img['radius']
-                        gap = self.R_GAP * max(s, r_i)
+            def reached(self):
+                return self.count > self.p
 
-                        if sqrt((x_i - xc_i) ** 2 + (y_i - yc_i) ** 2) - s - r_i <= gap:
-                            return True
-                return False
+        def _get_centers():
+            p = Patience()
 
-            if t in centers:
-                coords = np.array(centers[t])
-                # ic(coords)
-            else:  # First of type
-                imgs_computed = list(filter(lambda i: 'center' in i, self.img_d['imgs'].values()))
-                coords = list(map(lambda i: i['center'], imgs_computed))
-                if len(coords) == 0:
-                    coords = [
-                        [sz/2, sz/2]
-                    ]
-                else:
-                    coords = np.array(coords)
-                # ic(coords)
+            centers = dict()  # Image center coordinates, by type
 
-            xc, yc = np.average(coords, axis=0)
-            std_x, std_y = np.std(coords, axis=0)
+            def _get_center(t, s):
+                """
+                :param t: Type of image
+                :param s: Radius pixel size of image
+                """
+                def collide(x_i, y_i):
+                    margin = sz * self.R_MG
+                    if x_i < margin or x_i > sz - margin or y_i < margin or y_i > sz - margin:
+                        return True
 
-            # ic(xc, yc, std_x, std_y)
+                    for img in self.img_d['imgs'].values():
+                        if 'center' in img:
+                            xc_i, yc_i = img['center']
+                            r_i = img['radius']
+                            gap = self.R_GAP * max(s, r_i)
 
-            def get():
-                return int(gauss(xc, max(std_x, s))), int(gauss(yc, max(std_y, s)))
+                            if sqrt((x_i - xc_i) ** 2 + (y_i - yc_i) ** 2) - s - r_i <= gap:
+                                return True
+                    return False
 
-            c = get()
-            while collide(*c):
+                if t in centers:
+                    coords = np.array(centers[t])
+                else:  # First of type
+                    imgs_computed = list(filter(lambda i: 'center' in i, self.img_d['imgs'].values()))
+                    coords = list(map(lambda i: i['center'], imgs_computed))
+                    if len(coords) == 0:
+                        coords = [
+                            [sz/2, sz/2]
+                        ]
+                    else:
+                        coords = np.array(coords)
+
+                xc, yc = np.average(coords, axis=0)
+                std_x, std_y = np.std(coords, axis=0)
+
+                def get():
+                    p.inc()
+                    return int(gauss(xc, max(std_x, s))), int(gauss(yc, max(std_y, s)))
+
                 c = get()
+                if p.reached():
+                    return False
+                while collide(*c):
+                    if p.reached():
+                        return False
+                    c = get()
 
-            if t in centers:
-                centers[t].append(c)
-            else:
-                centers[t] = [c]
-            return c
+                if t in centers:
+                    centers[t].append(c)
+                else:
+                    centers[t] = [c]
+                return c
 
-        for k, img in self.img_d['imgs'].items():
-            f = img['fluency']
-            # ic(nm, tp, f)
+            for k, img in self.img_d['imgs'].items():
+                f = img['fluency']
 
-            sz_img = int(self.sz_img * sqrt(f))  # So that lower ratio are not too small
-            # sz_img = int(self.sz_img * (f ** (1. / 3)))  # So that lower ratio are not too small
+                sz_img = int(self.sz_img * sqrt(f))  # So that lower ratio are not too small
+                # sz_img = int(self.sz_img * (f ** (1. / 3)))
 
-            x, y = _get_center(img['type'], sz_img)
-            self.img_d['imgs'][k]['center'] = (x, y)
-            self.img_d['imgs'][k]['radius'] = sz_img
+                c = _get_center(img['type'], sz_img)
+                if c:
+                    x, y = c
+                    img['center'] = (x, y)
+                    img['radius'] = sz_img
+                else:
+                    return False
 
-        ic(centers)
+            return centers
+
+        c = _get_centers()
+        while not c:
+            for _, i in self.img_d['imgs'].items():
+                i.pop('center', None)
+                i.pop('radius', None)
+            c = _get_centers()
+        ic(c)
 
         for k, img in self.img_d['imgs'].items():
             x, y = img['center']
@@ -256,4 +285,6 @@ if __name__ == '__main__':
 
         THEME = (255, 161, 70)
         for i in range(n_runs):
+            ic()
             ig = ImgGen(d, overlay=True)
+            ig(r=0.75)

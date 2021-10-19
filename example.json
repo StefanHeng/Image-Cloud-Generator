@@ -1,14 +1,14 @@
 {
     "imgs": {
+        "Python": {
+            "name": "Python",
+            "type": "Language",
+            "fluency": 0.8
+        },
         "markdown": {
             "name": "markdown",
             "type": "Communication",
             "fluency": 0.8
-        },
-        "Python": {
-            "name": "Python",
-            "type": "Language",
-            "fluency": 0.7
         },
         "NumPy": {
             "name": "NumPy",
@@ -19,6 +19,11 @@
             "name": "Adobe Photoshop",
             "type": "Design",
             "fluency": 0.7
+        },
+        "LaTeX": {
+            "name": "LaTeX, modified",
+            "type": "Communication",
+            "fluency": 0.6
         },
         "HTML": {
             "name": "HTML",
@@ -35,9 +40,14 @@
             "type": "Language",
             "fluency": 0.5
         },
-        "LaTeX": {
-            "name": "LaTeX, modified",
-            "type": "Communication",
+        "Git": {
+            "name": "git",
+            "type": "Framework",
+            "fluency": 0.5
+        },
+        "PyCharm": {
+            "name": "PyCharm",
+            "type": "IDE",
             "fluency": 0.5
         },
         "VisualStudioCode": {
@@ -53,11 +63,6 @@
         "AdobeIllustrator": {
             "name": "Adobe Illustrator",
             "type": "Design",
-            "fluency": 0.4
-        },
-        "PyCharm": {
-            "name": "PyCharm",
-            "type": "IDE",
             "fluency": 0.4
         },
         "PyTorch": {
@@ -95,6 +100,11 @@
             "type": "IDE",
             "fluency": 0.3
         },
+        "DataSpell": {
+            "name": "DataSpell, modified",
+            "type": "IDE",
+            "fluency": 0.3
+        },
         "Android": {
             "name": "Android, modified",
             "type": "Language",
@@ -110,11 +120,6 @@
             "type": "Language",
             "fluency": 0.2
         },
-        "DataSpell": {
-            "name": "DataSpell, modified",
-            "type": "IDE",
-            "fluency": 0.2
-        },
         "JAVA": {
             "name": "JAVA",
             "type": "Language",
@@ -123,6 +128,11 @@
         "OCaml": {
             "name": "OCaml, modified",
             "type": "Language",
+            "fluency": 0.2
+        },
+        "LINUX": {
+            "name": "Ubuntu",
+            "type": "Other",
             "fluency": 0.2
         },
         "AdobePremierePro": {
@@ -135,6 +145,10 @@
             "type": "Design",
             "fluency": 0.2
         },
+        "Postman": {
+            "name": "Postman, modified",
+            "fluency": 0.2
+        },
         "XML": {
             "name": "XML, modified",
             "type": "Design",
@@ -145,8 +159,9 @@
             "type": "Language",
             "fluency": 0.1
         },
-        "Postman": {
-            "name": "Postman, modified",
+        "ros": {
+            "name": "ROS, modified",
+            "type": "Framework",
             "fluency": 0.1
         }
     },

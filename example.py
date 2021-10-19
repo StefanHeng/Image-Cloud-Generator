@@ -7,15 +7,15 @@ from icecream import ic
 
 d = dict(
     imgs=dict(
+        Python=dict(
+            name='Python',
+            type='Language',
+            fluency=0.8
+        ),
         markdown=dict(
             name='markdown',
             type='Communication',
             fluency=0.8
-        ),
-        Python=dict(
-            name='Python',
-            type='Language',
-            fluency=0.7
         ),
         NumPy=dict(
             name='NumPy',
@@ -26,6 +26,11 @@ d = dict(
             name='Adobe Photoshop',
             type='Design',
             fluency=0.7
+        ),
+        LaTeX=dict(
+            name='LaTeX, modified',
+            type='Communication',
+            fluency=0.6
         ),
         HTML=dict(
             name='HTML',
@@ -42,9 +47,14 @@ d = dict(
             type='Language',
             fluency=0.5
         ),
-        LaTeX=dict(
-            name='LaTeX, modified',
-            type='Communication',
+        Git=dict(
+            name='git',
+            type='Framework',
+            fluency=0.5
+        ),
+        PyCharm=dict(
+            name='PyCharm',
+            type='IDE',
             fluency=0.5
         ),
         VisualStudioCode=dict(
@@ -60,11 +70,6 @@ d = dict(
         AdobeIllustrator=dict(
             name='Adobe Illustrator',
             type='Design',
-            fluency=0.4
-        ),
-        PyCharm=dict(
-            name='PyCharm',
-            type='IDE',
             fluency=0.4
         ),
         PyTorch=dict(
@@ -102,6 +107,11 @@ d = dict(
             type='IDE',
             fluency=0.3
         ),
+        DataSpell=dict(
+            name='DataSpell, modified',
+            type='IDE',
+            fluency=0.3
+        ),
         Android=dict(
             name='Android, modified',
             type='Language',
@@ -117,11 +127,6 @@ d = dict(
             type='Language',
             fluency=0.2
         ),
-        DataSpell=dict(
-            name='DataSpell, modified',
-            type='IDE',
-            fluency=0.2
-        ),
         JAVA=dict(
             name='JAVA',
             type='Language',
@@ -130,6 +135,11 @@ d = dict(
         OCaml=dict(
             name='OCaml, modified',
             type='Language',
+            fluency=0.2
+        ),
+        LINUX=dict(
+            name='Ubuntu',
+            type='Other',
             fluency=0.2
         ),
         AdobePremierePro=dict(
@@ -142,6 +152,10 @@ d = dict(
             type='Design',
             fluency=0.2
         ),
+        Postman=dict(
+            name='Postman, modified',  # If `type` unspecified, will set to `Other` type
+            fluency=0.2
+        ),
         XML=dict(
             name='XML, modified',
             type='Design',
@@ -152,8 +166,9 @@ d = dict(
             type='Language',
             fluency=0.1
         ),
-        Postman=dict(
-            name='Postman, modified',  # If `type` unspecified, will set to `Other` type
+        ros=dict(
+            name='ROS, modified',
+            type='Framework',
             fluency=0.1
         )
     ),

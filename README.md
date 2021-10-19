@@ -16,8 +16,6 @@ Note that image files are added to the canvas as orders specified by the json fi
 Enjoy!
 
 ## FYI
-For the power of randomization, feel free to run it multiple times to pick your favorite! 
-
-For the same reason, it might not terminate. 
+For the power of randomization, feel free to run it multiple times to pick your favorite!
 
 Also, feel free to play with the constant values in `img_gen`. 
