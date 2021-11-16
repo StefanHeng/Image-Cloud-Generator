@@ -115,6 +115,11 @@
             "type": "Language",
             "fluency": 0.2
         },
+        "Jupyter": {
+            "name": "Jupyter, modified",
+            "type": "IDE",
+            "fluency": 0.2
+        },
         "MATLAB": {
             "name": "MATLAB, modified",
             "type": "Language",
@@ -132,6 +137,11 @@
         },
         "LINUX": {
             "name": "Ubuntu",
+            "type": "Other",
+            "fluency": 0.2
+        },
+        "ShellScript": {
+            "name": "Bash, modified",
             "type": "Other",
             "fluency": 0.2
         },

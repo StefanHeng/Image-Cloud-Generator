@@ -122,6 +122,11 @@ d = dict(
             type='Language',
             fluency=0.2
         ),
+        Jupyter=dict(
+            name='Jupyter, modified',
+            type='IDE',
+            fluency=0.2
+        ),
         MATLAB=dict(
             name='MATLAB, modified',
             type='Language',
@@ -139,6 +144,11 @@ d = dict(
         ),
         LINUX=dict(
             name='Ubuntu',
+            type='Other',
+            fluency=0.2
+        ),
+        ShellScript=dict(
+            name='Bash, modified',
             type='Other',
             fluency=0.2
         ),

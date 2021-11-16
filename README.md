@@ -1,6 +1,6 @@
 # Image-Cloud-Generator
 
-<img src="https://i.imgur.com/tT6mZbi.png" style="zoom:15%;" />
+<img src="https://i.imgur.com/m5z64CV.png" style="zoom:15%;" />
 
 Like word clouds, this is a utility that generates an image cloud.
 
