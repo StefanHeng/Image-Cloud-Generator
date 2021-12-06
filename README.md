@@ -18,4 +18,6 @@ Enjoy!
 ## FYI
 For the power of randomization, feel free to run it multiple times to pick your favorite!
 
+You can reuse the randomly generated coordinates from the corresponding `.pickle`. 
+
 Also, feel free to play with the constant values in `img_gen`. 

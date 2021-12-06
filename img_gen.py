@@ -1,16 +1,15 @@
-from PIL import Image, ImageDraw
-
-import numpy as np
-
-import time
+import os
 from random import randint, gauss
 from pathlib import Path
-
-from sympy import abc, sin, pi, nsolve
 from math import cos, sqrt, ceil
+import pickle
 
+from PIL import Image
+import numpy as np
+from sympy import abc, sin, pi, nsolve
 from icecream import ic
 
+from util import *
 from img_util import ImgUtil
 
 
@@ -58,7 +57,7 @@ class ImgGen:
     R_IM = 0.625  # Max dimension of image inside circular background, relative to background dimension
     R_SD = 0.25  # Mean ratio of shade added to bg theme color
     R_SD_SD = 0.0625  # Standard deviation on ratio of shade
-    SD_A = 0.75  # Alpha channel for background inner wave
+    SD_A = 0.75  # Alpha for background inner wave
     ROT = 5  # General rotation angle range for bg
     R_GAP = 0.15  # Gap between image circles, as a ratio of the larger one
     R_OVL = 0.125  # Ratio for overlay
@@ -90,10 +89,10 @@ class ImgGen:
 
     def _draw_img_bg(self, ratio, typ):
         """
+        Generates image backgrounds, which are circles filled with random waveforms
+
         :param ratio: Ratio of circular bg container filled
         :param typ: Type of image
-
-        Generates image backgrounds, which are circles filled with random waveforms
         """
         sz = self.sz
         r = self.r
@@ -149,7 +148,7 @@ class ImgGen:
         expand = Image.new('RGBA', bg.size, (0, 0, 0, 0))  # Same format for `alpha_composite`
         w_e, h_e = bg.size
         w, h = img.size
-        expand.paste(img, [int((w_e - w) / 2), int((h_e - h) / 2)])
+        expand.paste(img, (int((w_e - w) / 2), int((h_e - h) / 2)))
 
         final = Image.alpha_composite(bg, expand)
         if self.verbose:
@@ -157,15 +156,17 @@ class ImgGen:
             ic('Image with ratio background generated')
         return final
 
-    def __call__(self, r=1.0, patience=1e4):
+    def __call__(self, r=1.0, patience=1e4, count=None, save=False):
         """
+        Create image cloud
+
         :param r: Relative ratio of image to the canvas
         :param patience: Restart image center generations after `patience` iterations
         """
         imgs = self.img_d['imgs'].values()
 
         sz = int(ceil(sqrt(len(imgs))) * self.sz_img * 3 * r)  # Make sure canvas large enough
-        ic(sz)
+        # ic(sz)
         self.img = Image.new('RGBA', (sz, sz), (255, 255, 255, 255))
 
         class Patience:
@@ -194,10 +195,10 @@ class ImgGen:
                     if x_i < margin or x_i > sz - margin or y_i < margin or y_i > sz - margin:
                         return True
 
-                    for img in self.img_d['imgs'].values():
-                        if 'center' in img:
-                            xc_i, yc_i = img['center']
-                            r_i = img['radius']
+                    for img__ in self.img_d['imgs'].values():
+                        if 'center' in img__:
+                            xc_i, yc_i = img__['center']
+                            r_i = img__['radius']
                             gap = self.R_GAP * max(s, r_i)
 
                             if sqrt((x_i - xc_i) ** 2 + (y_i - yc_i) ** 2) - s - r_i <= gap:
@@ -207,8 +208,8 @@ class ImgGen:
                 if t in centers:
                     coords = np.array(centers[t])
                 else:  # First of type
-                    imgs_computed = list(filter(lambda i: 'center' in i, self.img_d['imgs'].values()))
-                    coords = list(map(lambda i: i['center'], imgs_computed))
+                    imgs_computed = list(filter(lambda im: 'center' in im, self.img_d['imgs'].values()))
+                    coords = list(map(lambda im: im['center'], imgs_computed))
                     if len(coords) == 0:
                         coords = [
                             [sz/2, sz/2]
@@ -223,68 +224,91 @@ class ImgGen:
                     p.inc()
                     return int(gauss(xc, max(std_x, s))), int(gauss(yc, max(std_y, s)))
 
-                c = get()
+                coord = get()
                 if p.reached():
                     return False
-                while collide(*c):
+                while collide(*coord):
                     if p.reached():
                         return False
-                    c = get()
+                    coord = get()
 
                 if t in centers:
-                    centers[t].append(c)
+                    centers[t].append(coord)
                 else:
-                    centers[t] = [c]
-                return c
+                    centers[t] = [coord]
+                return coord
 
-            for k, img in self.img_d['imgs'].items():
-                f = img['fluency']
+            for _, img_ in self.img_d['imgs'].items():
+                flu = img_['fluency']
 
-                sz_img = int(self.sz_img * sqrt(f))  # So that lower ratio are not too small
+                sz_img = int(self.sz_img * sqrt(flu))  # So that lower ratio are not too small
                 # sz_img = int(self.sz_img * (f ** (1. / 3)))
 
-                c = _get_center(img['type'], sz_img)
-                if c:
-                    x, y = c
-                    img['center'] = (x, y)
-                    img['radius'] = sz_img
+                center = _get_center(img_['type'], sz_img)
+                if center:
+                    # x, y = center
+                    # ic(type(center), center)
+                    img_['center'] = center
+                    img_['radius'] = sz_img
                 else:
                     return False
 
             return centers
 
-        c = _get_centers()
-        while not c:
-            for _, i in self.img_d['imgs'].items():
-                i.pop('center', None)
-                i.pop('radius', None)
-            c = _get_centers()
-        ic(c)
+        cts = _get_centers()
+        while not cts:
+            for _, img in self.img_d['imgs'].items():
+                img.pop('center', None)
+                img.pop('radius', None)
+            cts = _get_centers()
+        print(f'{now()}| Image coordinates generated... ')
 
         for k, img in self.img_d['imgs'].items():
             x, y = img['center']
             r = img['radius']
             ratio = img['fluency']
-            ic(k, r)
+            # ic(k, r)
             img = self._draw_img(k, ratio)
-            img = img.resize([r*2, r*2], Image.ANTIALIAS)
+            img = img.resize((r*2, r*2), Image.ANTIALIAS)
             expand = Image.new('RGBA', self.img.size, (0, 0, 0, 0))
-            expand.paste(img, [int(x - r/2), int(y - r/2)])
+            expand.paste(img, (int(x - r/2), int(y - r/2)))
             self.img = Image.alpha_composite(self.img, expand)
 
-        self.img.save(f'output/image-cloud {time.time()}.png')
+        fnm = os.path.join('output', f'image-cloud, {now()}, {count}.png')
+        if save:
+            ic(os.path.splitext(fnm))
+            with open(ch_ext(fnm, 'pickle'), 'wb') as handle:
+                pickle.dump(cts, handle, protocol=pickle.HIGHEST_PROTOCOL)
+                print(f'{now()}| Generated coordinates written to pickle ')
+        self.img.save(f'output/image-cloud, {now()}, {count}.png')
+        print(f'{now()}| Image ({sz} x {sz}) generated and written to {fnm}')
+
+    @staticmethod
+    def make_n(dic, n=5, obj_kwargs=None, call_kwargs=None):
+        """
+        Make multiple image clouds with the same image dictionary
+
+        :param dic: Image dictionary
+        :param n: Number of repetitions
+        :param obj_kwargs: Arguments passed to object constructor
+        :param call_kwargs: Arguments passed to object call
+        """
+        for i in range(n):
+            print(f'{now()}| Creating image cloud #{i+1}')
+            ig = ImgGen(dic, **obj_kwargs)
+            ig(count=i+1, **call_kwargs)
 
 
 if __name__ == '__main__':
     import json
 
-    n_runs = 5
-
     with open('example.json') as f:
         d = json.load(f)
 
-        THEME = (255, 161, 70)
-        for i in range(n_runs):
-            ic()
-            ig = ImgGen(d, overlay=True)
-            ig(r=0.75)
+        # THEME = (255, 161, 70)
+        ImgGen.make_n(d, obj_kwargs=dict(overlay=True), call_kwargs=dict(r=0.75, save=True))
+
+    def reuse_pickle():
+        fnm = 'gird-search, [(-5, 5), (-5, 5), 0.25], [(0, 1), 0.05], 2021-12-06 00:00:37.pickle'
+        with open(fnm, 'rb') as handle:
+            d = pickle.load(handle)

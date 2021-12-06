@@ -23,6 +23,11 @@
         "LaTeX": {
             "name": "LaTeX, modified",
             "type": "Communication",
+            "fluency": 0.7
+        },
+        "PyCharm": {
+            "name": "PyCharm",
+            "type": "IDE",
             "fluency": 0.6
         },
         "HTML": {
@@ -43,11 +48,6 @@
         "Git": {
             "name": "git",
             "type": "Framework",
-            "fluency": 0.5
-        },
-        "PyCharm": {
-            "name": "PyCharm",
-            "type": "IDE",
             "fluency": 0.5
         },
         "VisualStudioCode": {
@@ -105,6 +105,11 @@
             "type": "IDE",
             "fluency": 0.3
         },
+        "MATLAB": {
+            "name": "MATLAB, modified",
+            "type": "Language",
+            "fluency": 0.3
+        },
         "Android": {
             "name": "Android, modified",
             "type": "Language",
@@ -118,11 +123,6 @@
         "Jupyter": {
             "name": "Jupyter, modified",
             "type": "IDE",
-            "fluency": 0.2
-        },
-        "MATLAB": {
-            "name": "MATLAB, modified",
-            "type": "Language",
             "fluency": 0.2
         },
         "JAVA": {

@@ -30,6 +30,11 @@ d = dict(
         LaTeX=dict(
             name='LaTeX, modified',
             type='Communication',
+            fluency=0.7
+        ),
+        PyCharm=dict(
+            name='PyCharm',
+            type='IDE',
             fluency=0.6
         ),
         HTML=dict(
@@ -50,11 +55,6 @@ d = dict(
         Git=dict(
             name='git',
             type='Framework',
-            fluency=0.5
-        ),
-        PyCharm=dict(
-            name='PyCharm',
-            type='IDE',
             fluency=0.5
         ),
         VisualStudioCode=dict(
@@ -112,6 +112,11 @@ d = dict(
             type='IDE',
             fluency=0.3
         ),
+        MATLAB=dict(
+            name='MATLAB, modified',
+            type='Language',
+            fluency=0.3
+        ),
         Android=dict(
             name='Android, modified',
             type='Language',
@@ -125,11 +130,6 @@ d = dict(
         Jupyter=dict(
             name='Jupyter, modified',
             type='IDE',
-            fluency=0.2
-        ),
-        MATLAB=dict(
-            name='MATLAB, modified',
-            type='Language',
             fluency=0.2
         ),
         JAVA=dict(
