@@ -30,20 +30,10 @@
             "type": "IDE",
             "fluency": 0.6
         },
-        "HTML": {
-            "name": "HTML",
-            "type": "Language",
-            "fluency": 0.5
-        },
-        "Marko": {
-            "name": "Marko, edited",
-            "type": "Language",
-            "fluency": 0.5
-        },
         "JavaScript": {
             "name": "JavaScript",
             "type": "Language",
-            "fluency": 0.5
+            "fluency": 0.4
         },
         "Git": {
             "name": "git",
@@ -60,11 +50,6 @@
             "type": "Framework",
             "fluency": 0.4
         },
-        "AdobeIllustrator": {
-            "name": "Adobe Illustrator",
-            "type": "Design",
-            "fluency": 0.4
-        },
         "PyTorch": {
             "name": "PyTorch, modified",
             "type": "Framework",
@@ -73,7 +58,22 @@
         "scikit_learn": {
             "name": "scikit_learn, modified",
             "type": "Framework",
-            "fluency": 0.3
+            "fluency": 0.4
+        },
+        "AdobeIllustrator": {
+            "name": "Adobe Illustrator",
+            "type": "Design",
+            "fluency": 0.4
+        },
+        "HTML": {
+            "name": "HTML",
+            "type": "Language",
+            "fluency": 0.4
+        },
+        "Marko": {
+            "name": "Marko, edited",
+            "type": "Language",
+            "fluency": 0.5
         },
         "Cpp": {
             "name": "Cpp",

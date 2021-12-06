@@ -166,7 +166,6 @@ class ImgGen:
         imgs = self.img_d['imgs'].values()
 
         sz = int(ceil(sqrt(len(imgs))) * self.sz_img * 3 * r)  # Make sure canvas large enough
-        # ic(sz)
         self.img = Image.new('RGBA', (sz, sz), (255, 255, 255, 255))
 
         class Patience:
@@ -246,8 +245,6 @@ class ImgGen:
 
                 center = _get_center(img_['type'], sz_img)
                 if center:
-                    # x, y = center
-                    # ic(type(center), center)
                     img_['center'] = center
                     img_['radius'] = sz_img
                 else:
@@ -276,7 +273,6 @@ class ImgGen:
 
         fnm = os.path.join('output', f'image-cloud, {now()}, {count}.png')
         if save:
-            ic(os.path.splitext(fnm))
             with open(ch_ext(fnm, 'pickle'), 'wb') as handle:
                 pickle.dump(cts, handle, protocol=pickle.HIGHEST_PROTOCOL)
                 print(f'{now()}| Generated coordinates written to pickle ')
@@ -293,9 +289,9 @@ class ImgGen:
         :param obj_kwargs: Arguments passed to object constructor
         :param call_kwargs: Arguments passed to object call
         """
+        ig = ImgGen(dic, **obj_kwargs)
         for i in range(n):
             print(f'{now()}| Creating image cloud #{i+1}')
-            ig = ImgGen(dic, **obj_kwargs)
             ig(count=i+1, **call_kwargs)
 
 
@@ -308,7 +304,7 @@ if __name__ == '__main__':
         # THEME = (255, 161, 70)
         ImgGen.make_n(d, obj_kwargs=dict(overlay=True), call_kwargs=dict(r=0.75, save=True))
 
-    def reuse_pickle():
-        fnm = 'gird-search, [(-5, 5), (-5, 5), 0.25], [(0, 1), 0.05], 2021-12-06 00:00:37.pickle'
-        with open(fnm, 'rb') as handle:
-            d = pickle.load(handle)
+    # def reuse_pickle():
+    #     fnm = 'gird-search, [(-5, 5), (-5, 5), 0.25], [(0, 1), 0.05], 2021-12-06 00:00:37.pickle'
+    #     with open(fnm, 'rb') as handle:
+    #         d = pickle.load(handle)
