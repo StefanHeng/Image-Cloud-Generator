@@ -1,12 +1,12 @@
-import os
+import pickle
+from math import cos, sqrt, ceil
 from random import randint, gauss
 from pathlib import Path
-from math import cos, sqrt, ceil
-import pickle
 
-from PIL import Image
 import numpy as np
+from PIL import Image
 from sympy import abc, sin, pi, nsolve
+
 from icecream import ic
 
 from util import *
@@ -86,6 +86,7 @@ class ImgGen:
         self.is_d_theme = type(self.theme) is dict
 
         self.img = None
+        self.logger = get_logger('Image Cloud Generator')
 
     def _draw_img_bg(self, ratio, typ):
         """
@@ -156,7 +157,7 @@ class ImgGen:
             ic('Image with ratio background generated')
         return final
 
-    def __call__(self, r=1.0, patience=1e4, count=None, save=False):
+    def __call__(self, r=1.0, patience=1e4, save_fig_fnm: str = None, save_config=False):
         """
         Create image cloud
 
@@ -258,26 +259,25 @@ class ImgGen:
                 img.pop('center', None)
                 img.pop('radius', None)
             cts = _get_centers()
-        print(f'{now()}| Image coordinates generated... ')
+        self.logger.info('Image coordinates generated... ')
 
         for k, img in self.img_d['imgs'].items():
             x, y = img['center']
             r = img['radius']
             ratio = img['fluency']
-            # ic(k, r)
             img = self._draw_img(k, ratio)
             img = img.resize((r*2, r*2), Image.ANTIALIAS)
             expand = Image.new('RGBA', self.img.size, (0, 0, 0, 0))
             expand.paste(img, (int(x - r/2), int(y - r/2)))
             self.img = Image.alpha_composite(self.img, expand)
 
-        fnm = os.path.join('output', f'image-cloud, {now()}, {count}.png')
-        if save:
+        fnm = os.path.join('output', save_fig_fnm)
+        if save_config:
             with open(ch_ext(fnm, 'pickle'), 'wb') as handle:
                 pickle.dump(cts, handle, protocol=pickle.HIGHEST_PROTOCOL)
-                print(f'{now()}| Generated coordinates written to pickle ')
-        self.img.save(f'output/image-cloud, {now()}, {count}.png')
-        print(f'{now()}| Image ({sz} x {sz}) generated and written to {fnm}')
+                self.logger.info('Generated coordinates written to pickle ')
+        self.img.save(os.path.join(fnm))
+        self.logger.info(f'Image ({logi(sz)} x {logi(sz)}) generated and written to {logi(fnm)}')
 
     @staticmethod
     def make_n(dic, n=5, obj_kwargs=None, call_kwargs=None):
@@ -290,9 +290,11 @@ class ImgGen:
         :param call_kwargs: Arguments passed to object call
         """
         ig = ImgGen(dic, **obj_kwargs)
+        t = now(sep='-')
         for i in range(n):
-            print(f'{now()}| Creating image cloud #{i+1}')
-            ig(count=i+1, **call_kwargs)
+            ig.logger.info(f'Creating image cloud #{logi(i+1)}')
+            fnm = f'image-cloud, {t}, {i+1}.png'
+            ig(save_fig_fnm=fnm, **call_kwargs)
 
 
 if __name__ == '__main__':
@@ -302,7 +304,10 @@ if __name__ == '__main__':
         d = json.load(f)
 
         # THEME = (255, 161, 70)
-        ImgGen.make_n(d, obj_kwargs=dict(overlay=True), call_kwargs=dict(r=0.75, save=True))
+        ImgGen.make_n(
+            d, n=10,
+            obj_kwargs=dict(overlay=True), call_kwargs=dict(r=0.75, save_config=True)
+        )
 
     # def reuse_pickle():
     #     fnm = 'gird-search, [(-5, 5), (-5, 5), 0.25], [(0, 1), 0.05], 2021-12-06 00:00:37.pickle'
