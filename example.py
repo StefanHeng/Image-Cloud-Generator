@@ -20,6 +20,16 @@ d = dict(
             type='Framework',
             fluency=0.7
         ),
+        PyTorch=dict(
+            name='PyTorch, modified',
+            type='Framework',
+            fluency=0.6
+        ),
+        hugging_face=dict(
+            name='Hugging Face, modified',
+            type='Framework',
+            fluency=0.6
+        ),
         AdobePhotoshop=dict(
             name='Adobe Photoshop',
             type='Design',
@@ -29,6 +39,11 @@ d = dict(
             name='LaTeX, modified',
             type='Communication',
             fluency=0.7
+        ),
+        matplotlib=dict(
+            name='matplotlib, modified',
+            type='Framework',
+            fluency=0.6
         ),
         PyCharm=dict(
             name='PyCharm',
@@ -60,25 +75,15 @@ d = dict(
             type='Design',
             fluency=0.4
         ),
-        hugging_face=dict(
-            name='Hugging Face, modified',
-            type='Framework',
-            fluency=0.5
-        ),
-        PyTorch=dict(
-            name='PyTorch, modified',
-            type='Framework',
-            fluency=0.4
-        ),
         scikit_learn=dict(
             name='scikit_learn, modified',
             type='Framework',
-            fluency=0.3
+            fluency=0.4
         ),
-        matplotlib=dict(
-            name='matplotlib, modified',
+        pandas=dict(
+            name='pandas, modified',
             type='Framework',
-            fluency=0.5
+            fluency=0.4
         ),
         Plotly=dict(
             name='Plotly, modified',
@@ -92,11 +97,6 @@ d = dict(
         ),
         nodejs=dict(
             name='nodejs',
-            type='Framework',
-            fluency=0.3
-        ),
-        pandas=dict(
-            name='pandas, modified',
             type='Framework',
             fluency=0.3
         ),
@@ -206,7 +206,7 @@ if __name__ == '__main__':
 
     from icecream import ic
 
-    from util import *
+    from stefutil import *
 
     fl_nm = 'example.json'
     with open(fl_nm, 'w') as f:

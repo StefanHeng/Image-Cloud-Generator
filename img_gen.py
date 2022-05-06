@@ -1,3 +1,4 @@
+import os
 import pickle
 from math import cos, sqrt, ceil
 from random import randint, gauss
@@ -7,9 +8,7 @@ import numpy as np
 from PIL import Image
 from sympy import abc, sin, pi, nsolve
 
-from icecream import ic
-
-from util import *
+from stefutil import *
 from img_util import ImgUtil
 
 
@@ -48,6 +47,13 @@ def write_bg_circle(color):
     file = open(f'assets/bg-circle, {c_h}.svg', 'w')
     file.write(content)
     file.close()
+
+
+def ch_ext(fnm, ext):
+    """
+    :return: Original file path `fnm` with extension replaced by `ext`
+    """
+    return f'{os.path.splitext(fnm)[0]}.{ext}'
 
 
 class ImgGen:
@@ -290,7 +296,7 @@ class ImgGen:
         :param call_kwargs: Arguments passed to object call
         """
         ig = ImgGen(dic, **obj_kwargs)
-        t = now(sep='-')
+        t = now(for_path=True)
         for i in range(n):
             ig.logger.info(f'Creating image cloud #{logi(i+1)}')
             fnm = f'image-cloud, {t}, {i+1}.png'
@@ -299,6 +305,8 @@ class ImgGen:
 
 if __name__ == '__main__':
     import json
+
+    from icecream import ic
 
     with open('example.json') as f:
         d = json.load(f)
