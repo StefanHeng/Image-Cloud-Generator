@@ -3,7 +3,6 @@ import numpy as np
 from PIL import Image, ImageDraw
 from pathlib import Path
 from cairosvg import svg2png
-from icecream import ic
 
 
 class ImgUtil:
@@ -41,7 +40,7 @@ class ImgUtil:
         im = Image.open(fnm_png)
         w, h = im.size
         if w > sz or h > sz:
-            im.thumbnail((sz, sz), Image.ANTIALIAS)
+            im.thumbnail((sz, sz), Image.LANCZOS)
             im.save(fnm_png)
         return im
 

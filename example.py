@@ -45,6 +45,11 @@ d = dict(
             type='Framework',
             fluency=0.6
         ),
+        openaiapi=dict(
+            name='openai',
+            type='Framework',
+            fluency=0.5
+        ),
         PyCharm=dict(
             name='PyCharm',
             type='IDE',
@@ -92,6 +97,16 @@ d = dict(
         ),
         Cpp=dict(
             name='Cpp',
+            type='Language',
+            fluency=0.3
+        ),
+        D3=dict(
+            name='d3',
+            type='Framework',
+            fluency=0.3
+        ),
+        SQL=dict(
+            name='SQL',
             type='Language',
             fluency=0.3
         ),
@@ -204,17 +219,15 @@ d = dict(
 if __name__ == '__main__':
     import json
 
-    from icecream import ic
-
     from stefutil import *
 
     fl_nm = 'example.json'
     with open(fl_nm, 'w') as f:
         json.dump(d, f, indent=4)
 
-    ic(d)
+    mic(d)
     imgs = d['imgs']
     v = imgs.values()
     types = set(map(lambda x: x['type'] if 'type' in x else 'Other', v))
-    ic(types)
-    print(f'Image dictionary with {logi(len(v))} images of {logi(len(types))} created')
+    mic(types)
+    print(f'Image dictionary with {pl.i(len(v))} images of {pl.i(len(types))} created')

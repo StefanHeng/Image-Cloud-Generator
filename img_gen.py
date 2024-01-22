@@ -136,7 +136,7 @@ class ImgGen:
         final = Image.alpha_composite(inner, outer)
         if self.verbose:
             final.save('bg.png')
-            ic(f'Circular background generated with wave {idx}, quality {(sz, sz)}, shade {shade}, rotation {[ri, ro]}')
+            mic(f'Circular background generated with wave {idx}, quality {(sz, sz)}, shade {shade}, rotation {[ri, ro]}')
         return final
 
     def _draw_img(self, k, ratio):
@@ -160,7 +160,7 @@ class ImgGen:
         final = Image.alpha_composite(bg, expand)
         if self.verbose:
             final.save('img.png')
-            ic('Image with ratio background generated')
+            mic('Image with ratio background generated')
         return final
 
     def __call__(self, r=1.0, patience=1e4, save_fig_fnm: str = None, save_config=False):
@@ -170,6 +170,7 @@ class ImgGen:
         :param r: Relative ratio of image to the canvas
         :param patience: Restart image center generations after `patience` iterations
         """
+        t_ = Timer()
         imgs = self.img_d['imgs'].values()
 
         sz = int(ceil(sqrt(len(imgs))) * self.sz_img * 3 * r)  # Make sure canvas large enough
@@ -272,7 +273,7 @@ class ImgGen:
             r = img['radius']
             ratio = img['fluency']
             img = self._draw_img(k, ratio)
-            img = img.resize((r*2, r*2), Image.ANTIALIAS)
+            img = img.resize((r*2, r*2), Image.LANCZOS)
             expand = Image.new('RGBA', self.img.size, (0, 0, 0, 0))
             expand.paste(img, (int(x - r/2), int(y - r/2)))
             self.img = Image.alpha_composite(self.img, expand)
@@ -283,7 +284,7 @@ class ImgGen:
                 pickle.dump(cts, handle, protocol=pickle.HIGHEST_PROTOCOL)
                 self.logger.info('Generated coordinates written to pickle ')
         self.img.save(os.path.join(fnm))
-        self.logger.info(f'Image ({logi(sz)} x {logi(sz)}) generated and written to {logi(fnm)}')
+        self.logger.info(f'Image ({pl.i(sz)} x {pl.i(sz)}) generated in {t.end()}')
 
     @staticmethod
     def make_n(dic, n=5, obj_kwargs=None, call_kwargs=None):
@@ -296,17 +297,17 @@ class ImgGen:
         :param call_kwargs: Arguments passed to object call
         """
         ig = ImgGen(dic, **obj_kwargs)
-        t = now(for_path=True)
+        tm = now(for_path=True)
+        t = Timer()
         for i in range(n):
-            ig.logger.info(f'Creating image cloud #{logi(i+1)}')
-            fnm = f'image-cloud, {t}, {i+1}.png'
+            ig.logger.info(f'Creating image cloud #{pl.i(i+1)}')
+            fnm = f'{tm}_Image-Cloud_{i+1}.png'
             ig(save_fig_fnm=fnm, **call_kwargs)
+        ig.logger.info(f'Image clouds generated in {t.end()}')
 
 
 if __name__ == '__main__':
     import json
-
-    from icecream import ic
 
     with open('example.json') as f:
         d = json.load(f)

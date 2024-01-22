@@ -1,11 +1,11 @@
 # Image-Cloud-Generator
 
-<img src="https://i.imgur.com/slNpD6e.png" style="zoom:15%;" />
+<img src="https://i.imgur.com/USEmQc0.png" style="zoom:15%;" />
 
 Like word clouds, this is a utility that generates an image cloud.
 
 
-## To use 
+## Usage
 Generate a template JSON with name `example.json`, as in `example.py`, then run:
 ```bash
 python img_gen.py
